@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Fullscreen Video Slideshow with BigVideo.js</title>
@@ -11,171 +11,71 @@
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bigvideo.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
     <script src="js/modernizr-2.5.3.min.js"></script>
     <!--[if lte IE 8]>
-    <style>
-        /* Rotation of the arrow element for IE < 9 */
-        .next-icon { /* IE Matrix Calculator - http: //www.boogdesign.com/examples/transforms/matrix-calculator.html */;
-            -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=-0.70710678, M21=0.70710678, M22=0.70710678,sizingMethod='auto expand')";
-            filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=-0.70710678, M21=0.70710678, M22=0.70710678,sizingMethod='auto expand');
-        }
-    </style>
-    <![endif]-->
-</head>
-<body>
-    <div class="wrapper">
-        <div class="screen" id="screen-1" data-video="vid/angelica">
-            <img src="img/angelica.png" class="big-image" />
+        <style>
+          /* Rotation of the arrow element for IE < 9 */
+                                                    .next-icon { /* IE Matrix Calculator - http: //www.boogdesign.com/examples/transforms/matrix-calculator.html */;
+                                                    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=-0.70710678, M21=0.70710678, M22=0.70710678,sizingMethod='auto expand')";
+                                                    filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=-0.70710678, M21=0.70710678, M22=0.70710678,sizingMethod='auto expand');
+                                                    }
+                                                    </style>
+        <![endif]-->
+  </head>
+  <body>
+    <div id="fullpage">
+      <div class="section">
+        <div class="slide video0" data-video="vid/angelica">
+          <video width="1280" height="780" autoplay loop>
+            <source src="vid/angelica.mp4" type="video/mp4" />
+            <source src="vid/angelica.webm" type="video/webm" />
+            <source src="vid/angelica.ogg" type="video/ogg" />
+          </video>
         </div>
-        <div class="screen" id="screen-2" data-video="vid/mouth">
-            <img src="img/mouth.png" class="big-image" />
+        <div class="slide video1"  data-video="vid/mouth">
+          <video width="1280" height="780" autoplay loop>
+            <source src="vid/mouth.mp4" type="video/mp4" />
+            <source src="vid/mouth.webm" type="video/webm" />
+            <source src="vid/mouth.ogg" type="video/ogg" />
+          </video>
         </div>
-        <div class="screen" id="screen-3" data-video="vid/baraka">
-            <img src="img/baraka.png" class="big-image" />
+        <div class="slide video2"  data-video="vid/baraka">
+          <video width="1280" height="780" autoplay loop>
+            <source src="vid/baraka.mp4" type="video/mp4" />
+            <source src="vid/baraka.webm" type="video/webm" />
+            <source src="vid/baraka.ogg" type="video/ogg" />
+          </video>
         </div>
-        <div class="screen" id="screen-4" data-video="vid/suspiria">
-            <img src="img/suspiria.png" class="big-image" />
+        <div class="slide video3"  data-video="vid/suspiria">
+          <video width="1280" height="780" autoplay loop>
+            <source src="vid/suspiria.mp4" type="video/mp4" />
+            <source src="vid/suspiria.webm" type="video/webm" />
+            <source src="vid/suspiria.ogg" type="video/ogg" />
+          </video>
         </div>
-        <div class="screen" id="screen-5" data-video="vid/caes">
-            <img src="img/caes.png" class="big-image" />
+        <div class="slide video4"  data-video="vid/caes">
+          <video width="1280" height="780" autoplay loop>
+            <source src="vid/caes.mp4" type="video/mp4" />
+            <source src="vid/caes.webm" type="video/webm" />
+            <source src="vid/caes.ogg" type="video/ogg" />
+          </video>
         </div>
-    </div>
+      </div>
 
-    <nav id="next-btn">
-        <a href="#" class="next-icon"></a>
-    </nav>
+    </div>
 
     <!-- BigVideo Dependencies -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-1.8.1.min.js"><\/script>')</script>
-    <script src="js/jquery-ui-1.8.22.custom.min.js"></script>
-    <script src="js/jquery.imagesloaded.min.js"></script>
-    <script src="js/video.js"></script>
+      <script src="js/jquery-ui-1.8.22.custom.min.js"></script>
+      <script src="js/jquery.imagesloaded.min.js"></script>
+      <script src="js/video.js"></script>
 
-    <!-- BigVideo -->
-    <script src="js/bigvideo.js"></script>
-
-    <!-- Tutorial Demo -->
-    <script src="js/jquery.transit.min.js"></script>
-    <script>
-        $(function() {
-
-            // Use Modernizr to detect for touch devices,
-            // which don't support autoplay and may have less bandwidth,
-            // so just give them the poster images instead
-            var screenIndex = 1,
-                numScreens = $('.screen').length,
-                isTransitioning = false,
-                transitionDur = 1000,
-                BV,
-                videoPlayer,
-                isTouch = Modernizr.touch,
-                $bigImage = $('.big-image'),
-                $window = $(window);
-
-            if (!isTouch) {
-                // initialize BigVideo
-                BV = new $.BigVideo({doLoop: true});
-                BV.init();
-                showVideo();
-
-                BV.getPlayer().addEvent('loadeddata', function() {
-                    onVideoLoaded();
-                });
-
-                // adjust image positioning so it lines up with video
-                $bigImage
-                    .css('position','relative')
-                    .imagesLoaded(adjustImagePositioning);
-                // and on window resize
-                $window.on('resize', adjustImagePositioning);
-            }
-
-            // Next button click goes to next div
-            $('#next-btn').on('click', function(e) {
-                e.preventDefault();
-                if (!isTransitioning) {
-                    next();
-                }
-            });
-
-        function showVideo() {
-                src = $('#screen-'+screenIndex).attr('data-video');
-                BV.show([ { type: "video/mp4",  src: src + '.mp4' },
-        { type: "video/webm", src: src + '.webm' },
-        { type: "video/ogg",  src: src + '.ogg' }], {ambient:true});
-            }
-
-            function next() {
-                isTransitioning = true;
-
-                // update video index, reset image opacity if starting over
-                if (screenIndex === numScreens) {
-                    $bigImage.css('opacity',1);
-                    screenIndex = 1;
-                } else {
-                    screenIndex++;
-                }
-
-                if (!isTouch) {
-                    $('#big-video-wrap').transit({'left':'-100%'},transitionDur)
-                }
-
-                (Modernizr.csstransitions)?
-                    $('.wrapper').transit(
-                        {'left':'-'+(100*(screenIndex-1))+'%'},
-                        transitionDur,
-                        onTransitionComplete):
-                    onTransitionComplete();
-            }
-
-            function onVideoLoaded() {
-                $('#screen-'+screenIndex).find('.big-image').transit({'opacity':0},500)
-            }
-
-            function onTransitionComplete() {
-                isTransitioning = false;
-                if (!isTouch) {
-                    $('#big-video-wrap').css('left',0);
-                    showVideo();
-                }
-            }
-
-            function adjustImagePositioning() {
-                $bigImage.each(function(){
-                    var $img = $(this),
-                        img = new Image();
-
-                    img.src = $img.attr('src');
-
-                    var windowWidth = $window.width(),
-                        windowHeight = $window.height(),
-                        r_w = windowHeight / windowWidth,
-                        i_w = img.width,
-                        i_h = img.height,
-                        r_i = i_h / i_w,
-                        new_w, new_h, new_left, new_top;
-
-                    if( r_w > r_i ) {
-                        new_h   = windowHeight;
-                        new_w   = windowHeight / r_i;
-                    }
-                    else {
-                        new_h   = windowWidth * r_i;
-                        new_w   = windowWidth;
-                    }
-
-                    $img.css({
-                        width   : new_w,
-                        height  : new_h,
-                        left    : ( windowWidth - new_w ) / 2,
-                        top     : ( windowHeight - new_h ) / 2
-                    })
-
-                });
-
-            }
-        });
-    </script>
-</body>
+      <!-- BigVideo -->
+      <script src="js/bigvideo.js"></script>
+      <script src="js/jquery.transit.min.js"></script>
+      <script src="js/jquery.fullPage.min.js"></script>
+      <script src="js/main.js"></script>
+  </body>
 </html>

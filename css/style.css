@@ -187,3 +187,8 @@ nav:hover {
     display: block;
 }
 /* End Codrops Header Style */
+
+video {
+    width: 100% !important;
+    height: auto !important;
+}
